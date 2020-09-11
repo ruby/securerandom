@@ -1,8 +1,7 @@
 # Securerandom
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/securerandom`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This library is an interface to secure random number generators which are
+suitable for generating session keys in HTTP cookies, etc.
 
 ## Installation
 
@@ -22,7 +21,44 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Generate random hexadecimal strings:
+
+```ruby
+require 'securerandom'
+
+SecureRandom.hex(10) #=> "52750b30ffbc7de3b362"
+SecureRandom.hex(10) #=> "92b15d6c8dc4beb5f559"
+SecureRandom.hex(13) #=> "39b290146bea6ce975c37cfc23"
+```
+
+Generate random base64 strings:
+
+```ruby
+SecureRandom.base64(10) #=> "EcmTPZwWRAozdA=="
+SecureRandom.base64(10) #=> "KO1nIU+p9DKxGg=="
+SecureRandom.base64(12) #=> "7kJSM/MzBJI+75j8"
+```
+
+Generate random binary strings:
+
+```ruby
+SecureRandom.random_bytes(10) #=> "\016\t{\370g\310pbr\301"
+SecureRandom.random_bytes(10) #=> "\323U\030TO\234\357\020\a\337"
+```
+
+Generate alphanumeric strings:
+
+```ruby
+SecureRandom.alphanumeric(10) #=> "S8baxMJnPl"
+SecureRandom.alphanumeric(10) #=> "aOxAg8BAJe"
+```
+
+Generate UUIDs:
+
+```ruby
+SecureRandom.uuid #=> "2d931510-d99f-494a-8c67-87feb05e1594"
+SecureRandom.uuid #=> "bad85eb9-0713-4da7-8d36-07a8e4b00eab"
+```
 
 ## Development
 
@@ -32,5 +68,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hsbt/securerandom.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ruby/securerandom.
 
