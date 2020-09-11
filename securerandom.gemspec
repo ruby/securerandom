@@ -1,8 +1,6 @@
-require_relative 'lib/securerandom/version'
-
 Gem::Specification.new do |spec|
   spec.name          = "securerandom"
-  spec.version       = Securerandom::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ["Hiroshi SHIBATA"]
   spec.email         = ["hsbt@ruby-lang.org"]
 
