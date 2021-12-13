@@ -3,6 +3,8 @@
 
 # == Random number formatter.
 #
+# Formats generated random numbers in many manners.
+#
 # === Examples
 #
 # Generate random hexadecimal strings:
