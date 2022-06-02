@@ -83,6 +83,14 @@ module Random::Formatter
       end
     end
 
+    def test_random_string
+      80.times do |n|
+        rs = @it.random_string([*'a'..'f'], n)
+        assert_match(/\A[a-f]*\z/, rs)
+        assert_equal(n, rs.length)
+      end
+    end
+
     def assert_in_range(range, result, mesg = nil)
       assert(range.cover?(result), build_message(mesg, "Expected #{result} to be in #{range}"))
     end

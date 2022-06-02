@@ -23,7 +23,7 @@ require 'random/formatter'
 #
 # * alphanumeric
 # * base64
-# * choose
+# * random_string
 # * gen_random
 # * hex
 # * rand

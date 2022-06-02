@@ -152,7 +152,7 @@ module Random::Formatter
     self.bytes(n)
   end
 
-  # Random::Formatter#choose generates a string that randomly draws from a
+  # Random::Formatter#random_string generates a string that randomly draws from a
   # source array of characters.
   #
   # The argument _source_ specifies the array of characters from which
@@ -164,9 +164,9 @@ module Random::Formatter
   #
   #   require 'random/formatter'
   #
-  #   prng.choose([*'l'..'r'], 16) #=> "lmrqpoonmmlqlron"
-  #   prng.choose([*'0'..'9'], 5)  #=> "27309"
-  private def choose(source, n)
+  #   prng.random_string([*'l'..'r'], 16) #=> "lmrqpoonmmlqlron"
+  #   prng.random_string([*'0'..'9'], 5)  #=> "27309"
+  def random_string(source, n)
     size = source.size
     m = 1
     limit = size
@@ -195,6 +195,8 @@ module Random::Formatter
     result
   end
 
+  alias_method :choose, :random_string
+
   ALPHANUMERIC = [*'A'..'Z', *'a'..'z', *'0'..'9']
   # Random::Formatter#alphanumeric generates a random alphanumeric string.
   #
@@ -212,6 +214,6 @@ module Random::Formatter
   #   prng.alphanumeric(10) #=> "i6K93NdqiH"
   def alphanumeric(n=nil)
     n = 16 if n.nil?
-    choose(ALPHANUMERIC, n)
+    random_string(ALPHANUMERIC, n)
   end
 end
