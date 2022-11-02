@@ -53,11 +53,18 @@ SecureRandom.alphanumeric(10) #=> "S8baxMJnPl"
 SecureRandom.alphanumeric(10) #=> "aOxAg8BAJe"
 ```
 
-Generate UUIDs:
+Generate UUIDs v4 (random):
 
 ```ruby
 SecureRandom.uuid #=> "2d931510-d99f-494a-8c67-87feb05e1594"
 SecureRandom.uuid #=> "bad85eb9-0713-4da7-8d36-07a8e4b00eab"
+```
+
+Generate UUIDs v7 (unix timestamp + random):
+
+```ruby
+SecureRandom.uuid_v7 #=> "01843a55-736e-785c-9f2e-0f74f11d6145"
+SecureRandom.uuid_v7 #=> "01843a55-7370-799e-8498-669a5b1fbc19"
 ```
 
 ## Development

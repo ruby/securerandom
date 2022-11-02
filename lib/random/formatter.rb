@@ -148,6 +148,28 @@ module Random::Formatter
     "%08x-%04x-%04x-%04x-%04x%08x" % ary
   end
 
+  # Random::Formatter#uuid generates a random v7 UUID (Universally Unique IDentifier).
+  #
+  #   require 'random/formatter'
+  #
+  #   prng.uuid_v7 #=> "01843a54-f268-7f51-934c-216e9ca4fe05"
+  #   prng.uuid_v7 #=> "01843a54-f26b-7edf-862b-d986fb0f421b"
+  #   prng.uuid_v7 #=> "01843a54-f26f-7664-b455-85fa8a5e6a4d"
+  #
+  # The version 7 UUID is random, but contains a time-based component for ordering.
+  #
+  # The result contains 74 random bits (9 random bytes).
+  #
+  # See RFC 4122 for details of UUID.
+  #
+  def uuid_v7
+    ts = [Process.clock_gettime(Process::CLOCK_REALTIME, :millisecond)].pack('Q>').unpack('nNn').drop(1)
+    ary = random_bytes(10).unpack("nnnN")
+    ary[0] = (ary[0] & 0x0fff) | 0x7000
+    ary[1] = (ary[1] & 0x3fff) | 0x8000
+    "%08x-%04x-%04x-%04x-%04x%08x" % (ts + ary)
+  end
+
   private def gen_random(n)
     self.bytes(n)
   end
