@@ -30,3 +30,23 @@ jobs:
     - name: RDoc coverage
       run: rdoc -C
       if: ${{ matrix.ruby == needs.ruby-versions.outputs.latest && matrix.os == 'ubuntu-latest' }}
+    - id: build
+      run: |
+        rake build:checksum
+        ls -l pkg/*.gem checksums/*
+        cat checksums/*
+        echo "pkg=${GITHUB_REPOSITORY#*/}-${PLATFORM:-${RUNNING_OS%-*}}" >> $GITHUB_OUTPUT
+      env:
+        RUNNING_OS: ${{matrix.os}}
+      if: >-
+        ${{
+        github.event_name == 'push' &&
+        matrix.ruby == needs.ruby-versions.outputs.latest
+        }}
+      shell: bash
+    - name: Upload package
+      uses: actions/upload-artifact@v4
+      with:
+        path: pkg/*.gem
+        name: ${{steps.build.outputs.pkg}}
+      if: ${{ steps.build.outcome == 'success' }}
