@@ -27,3 +27,6 @@ jobs:
       run: bundle install
     - name: Run test
       run: rake test
+    - name: RDoc coverage
+      run: rdoc -C
+      if: ${{ matrix.ruby == needs.ruby-versions.outputs.latest && matrix.os == 'ubuntu-latest' }}
