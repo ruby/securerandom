@@ -44,9 +44,9 @@
 #
 # Generate strings from the visible printable ASSCII characters - characters 33–126
 #
-#   prng.ascii_printable_visable(20) #=> "BSJsDtHia\\8/P\"Ag#fy^"
-#   prng.ascii_printable_visable(20) #=> "L^4iJK#W%R(5PeFa;4ss"
-#   prng.ascii_printable_visable(20) #=> "!#=j)6u_7cO^DP<qa]R1"
+#   prng.ascii_printable_visible(20) #=> "BSJsDtHia\\8/P\"Ag#fy^"
+#   prng.ascii_printable_visible(20) #=> "L^4iJK#W%R(5PeFa;4ss"
+#   prng.ascii_printable_visible(20) #=> "!#=j)6u_7cO^DP<qa]R1"
 #
 # Generate UUIDs:
 #
