@@ -382,7 +382,7 @@ module Random::Formatter
 
   # Generate a random string of characters from the printable visible ASCII space,
   # characters 33–126, which is more or less the set of unaccented characters typable
-  # on a typical english keyboard.
+  # on a typical English keyboard.
   #
   # The argument _n_ specifies the length, in characters, of the
   # string to be generated.
