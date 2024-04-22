@@ -42,6 +42,12 @@
 #   prng.alphanumeric(10) #=> "aOxAg8BAJe"
 #   Random.alphanumeric #=> "TmP9OsJHJLtaZYhP"
 #
+# Generate strings from the visible printable ASSCII characters - characters 33–126
+#
+#   prng.ascii_printable_visable(20) #=> "BSJsDtHia\\8/P\"Ag#fy^"
+#   prng.ascii_printable_visable(20) #=> "L^4iJK#W%R(5PeFa;4ss"
+#   prng.ascii_printable_visable(20) #=> "!#=j)6u_7cO^DP<qa]R1"
+#
 # Generate UUIDs:
 #
 #   prng.uuid #=> "2d931510-d99f-494a-8c67-87feb05e1594"
@@ -369,5 +375,28 @@ module Random::Formatter
   def alphanumeric(n = nil, chars: ALPHANUMERIC)
     n = 16 if n.nil?
     choose(chars, n)
+  end
+
+
+  ASCII_PRINTABLE_VISIBLE = ('!'..'~').to_a
+
+  # Generate a random string of characters from the printable visible ASCII space,
+  # characters 33–126, which is more or less the set of unaccented characters typable
+  # on a typical english keyboard.
+  #
+  # The argument _n_ specifies the length, in characters, of the
+  # string to be generated.
+  #
+  # If _n_ is not specified or is nil, 16 is assumed.
+  # It may be larger in the future.
+  #
+  #   require 'random/formatter'
+  #
+  #   Random.ascii_printable_visible #=> "A3\\HDEY?+YpZ806_"
+  #   # or
+  #   prng = Random.new
+  #   prng.ascii_printable_visible(10) #=> "n5v&~Mi8{'"
+  def ascii_printable_visible(n = nil)
+    alphanumeric(n, chars: ASCII_PRINTABLE_VISIBLE)
   end
 end
