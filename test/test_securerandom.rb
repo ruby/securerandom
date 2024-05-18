@@ -1,21 +1,17 @@
 # frozen_string_literal: false
 require 'test/unit'
 require 'securerandom'
-require_relative 'ruby/test_random_formatter'
 
 # This testcase does NOT aim to test cryptographically strongness and randomness.
 class TestSecureRandom < Test::Unit::TestCase
-  include Random::Formatter::FormatterTest
-  include Random::Formatter::NotDefaultTest
-
   def setup
     @it = SecureRandom
   end
 
-# This test took 2 minutes on my machine.
-# And 65536 times loop could not be enough for forcing PID recycle.
-if false
+  # This test took 2 minutes on my machine.
+  # And 65536 times loop could not be enough for forcing PID recycle.
   def test_s_random_bytes_is_fork_safe
+    omit "Too time consuming but not enough loop"
     begin
       require 'openssl'
     rescue LoadError
@@ -63,7 +59,6 @@ if false
     end
     false # not recycled?
   end
-end
 
   def test_with_openssl
     begin
