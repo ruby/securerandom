@@ -124,6 +124,14 @@ module Random::Formatter
       end
     end
 
+    def test_ascii_printable_visible
+      65.times do |n|
+        an = @it.ascii_printable_visible(n)
+        assert_match(/\A[!-~]*\z/, an)
+        assert_equal(n, an.length)
+      end
+    end
+
     def test_alphanumeric_chars
       [
         [[*"0".."9"], /\A\d*\z/],
