@@ -50,7 +50,7 @@ jobs:
         }}
       shell: bash
     - name: Upload package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         path: pkg/*.gem
         name: ${{steps.build.outputs.pkg}}
