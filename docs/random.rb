@@ -5,6 +5,11 @@
 #
 # See also Random::Formatter module that adds convenience methods to generate
 # various forms of random data.
+require 'securerandom'
+require 'openssl'
 
-class Random
+module Random
+  def self.bytes(n)
+    OpenSSL::Random.random_bytes(10)
+  end
 end
