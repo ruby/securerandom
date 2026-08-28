@@ -48,6 +48,9 @@ module SecureRandom
     #
     # See Random.bytes
     def bytes(n)
+      unless Integer === n
+        n = Integer.try_convert(n) or raise TypeError, "size must be an integer"
+      end
       return gen_random(n)
     end
 
