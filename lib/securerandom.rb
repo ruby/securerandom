@@ -56,8 +56,7 @@ module SecureRandom
       n = 16 if n.nil?
       size = chars.size
       raise ArgumentError, "character length must not be negative" if 0 > n
-      raise ArgumentError, "character source must not be empty" if size == 0
-      return chars.values_at(0).join('') * n if size < 2
+      raise ArgumentError, "character source must contain at least two entries" if size < 2
       choose(chars, n)
     end if RUBY_VERSION < '3.3'
 
