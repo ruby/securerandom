@@ -57,6 +57,60 @@ module SecureRandom
       choose(chars, n)
     end if RUBY_VERSION < '3.3'
 
+    # Compatibility methods for Ruby 3.1 and Ruby 3.2.
+    if RUBY_VERSION < '3.3'
+      # Generates a random version 4 UUID.
+      def uuid_v4
+        uuid
+      end
+
+      # Generates a random version 7 UUID using the current Unix timestamp.
+      #
+      # +extra_timestamp_bits+ specifies additional timestamp precision from
+      # 0 to 12 bits.
+      def uuid_v7(extra_timestamp_bits: 0)
+        case (extra_timestamp_bits = Integer(extra_timestamp_bits))
+        when 0
+          ms = Process.clock_gettime(Process::CLOCK_REALTIME, :millisecond)
+          random = random_bytes(10)
+          random.setbyte(0, random.getbyte(0) & 0x0f | 0x70)
+          random.setbyte(2, random.getbyte(2) & 0x3f | 0x80)
+          "%08x-%04x-%s" % [
+            (ms & 0x0000_ffff_ffff_0000) >> 16,
+            (ms & 0x0000_0000_0000_ffff),
+            random.unpack("H4H4H12").join("-")
+          ]
+        when 12
+          ms, ns = Process.clock_gettime(Process::CLOCK_REALTIME, :nanosecond).divmod(1_000_000)
+          extra_bits = ns * 4096 / 1_000_000
+          random = random_bytes(8)
+          random.setbyte(0, random.getbyte(0) & 0x3f | 0x80)
+          "%08x-%04x-7%03x-%s" % [
+            (ms & 0x0000_ffff_ffff_0000) >> 16,
+            (ms & 0x0000_0000_0000_ffff),
+            extra_bits,
+            random.unpack("H4H12").join("-")
+          ]
+        when (0..12)
+          rand_a, rand_b1, rand_b2, rand_b3 = random_bytes(10).unpack("nnnN")
+          rand_mask_bits = 12 - extra_timestamp_bits
+          ms, ns = Process.clock_gettime(Process::CLOCK_REALTIME, :nanosecond).divmod(1_000_000)
+          "%08x-%04x-%04x-%04x-%04x%08x" % [
+            (ms & 0x0000_ffff_ffff_0000) >> 16,
+            (ms & 0x0000_0000_0000_ffff),
+            0x7000 |
+              ((ns * (1 << extra_timestamp_bits) / 1_000_000) << rand_mask_bits) |
+              rand_a & ((1 << rand_mask_bits) - 1),
+            0x8000 | (rand_b1 & 0x3fff),
+            rand_b2,
+            rand_b3
+          ]
+        else
+          raise ArgumentError, "extra_timestamp_bits must be in 0..12"
+        end
+      end
+    end
+
     private
 
     # :stopdoc:
