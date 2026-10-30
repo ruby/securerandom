@@ -54,6 +54,9 @@ module SecureRandom
     # Compatibility methods for Ruby 3.2, we can remove this after dropping to support Ruby 3.2
     def alphanumeric(n = nil, chars: ALPHANUMERIC)
       n = 16 if n.nil?
+      size = chars.size
+      raise ArgumentError, "character length must not be negative" if 0 > n
+      raise ArgumentError, "character source must contain at least two entries" if size < 2
       choose(chars, n)
     end if RUBY_VERSION < '3.3'
 
