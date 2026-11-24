@@ -85,7 +85,7 @@ module SecureRandom
     rescue RuntimeError
       begin
         require 'openssl'
-      rescue NoMethodError
+      rescue LoadError
         raise NotImplementedError, "No random device"
       else
         alias gen_random gen_random_openssl
